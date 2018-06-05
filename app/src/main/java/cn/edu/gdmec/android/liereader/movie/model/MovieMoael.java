@@ -1,11 +1,11 @@
 package cn.edu.gdmec.android.liereader.movie.model;
 
-import cn.edu.gdmec.android.liereader.bean.MovieBean;
+import cn.edu.gdmec.android.liereader.bean.MoviesBean;
 import cn.edu.gdmec.android.liereader.http.Api;
 import cn.edu.gdmec.android.liereader.http.RetrofitHelper;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by apple on 18/5/22.
@@ -14,23 +14,26 @@ import retrofit2.Response;
 public class MovieMoael implements IMovieModel{
 
     @Override
-    public void loadMovie(String hostType, String id, final IMovieloadListener iMovieloadListener) {
+    public void loadMovie(String total,final IOnLoadListener iOnLoadListener) {
         RetrofitHelper retrofitHelper = new RetrofitHelper(Api.MOVIE_HOST);
-        retrofitHelper.getMovie().enqueue(new Callback<MovieBean>() {
-            @Override
-            public void onResponse(Call<MovieBean> call, Response<MovieBean> response) {
-                if (response.isSuccessful()){
-                    iMovieloadListener.success(response.body());
-                }else{
-                    iMovieloadListener.fail("");
-                }
+        retrofitHelper.getMovies(total)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<MoviesBean>() {
+                    @Override
+                    public void onCompleted() {
 
-            }
+                    }
 
-            @Override
-            public void onFailure(Call<MovieBean> call, Throwable t) {
-                iMovieloadListener.fail(t.toString());
-            }
-        });
+                    @Override
+                    public void onError(Throwable e) {
+                        iOnLoadListener.fail(e);
+                    }
+
+                    @Override
+                    public void onNext(MoviesBean moviesBean) {
+                        iOnLoadListener.success(moviesBean);
+                    }
+                });
     }
 }

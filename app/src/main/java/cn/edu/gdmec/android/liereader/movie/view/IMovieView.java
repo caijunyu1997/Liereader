@@ -1,14 +1,14 @@
 package cn.edu.gdmec.android.liereader.movie.view;
 
-import cn.edu.gdmec.android.liereader.bean.MovieBean;
+import cn.edu.gdmec.android.liereader.bean.MoviesBean;
 
 /**
  * Created by apple on 18/5/22.
  */
 
 public interface IMovieView {
-    void showMovie(MovieBean movieBean);
+    void showMovie(MoviesBean moviesBean);
     void hideDialog();
     void showDialog();
-    void showErrorMsg(String error);
+    void showErrorMsg(Throwable throwable);
 }

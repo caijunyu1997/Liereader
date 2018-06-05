@@ -5,5 +5,5 @@ package cn.edu.gdmec.android.liereader.movie.model;
  */
 
 public interface IMovieModel {
-    void loadMovie(String hostType, String id, IMovieloadListener iMovieloadListener);
+    void loadMovie(String total, IOnLoadListener iOnLoadListener);
 }

@@ -6,7 +6,7 @@ import java.util.List;
  * Created by apple on 18/5/22.
  */
 
-public class MovieBean {
+public class MoviesBean {
 
 
     /**
