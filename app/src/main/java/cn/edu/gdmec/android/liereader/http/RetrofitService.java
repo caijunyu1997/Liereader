@@ -2,8 +2,12 @@ package cn.edu.gdmec.android.liereader.http;
 
 import cn.edu.gdmec.android.liereader.bean.MoviesBean;
 import cn.edu.gdmec.android.liereader.bean.NewsBean;
+import cn.edu.gdmec.android.liereader.bean.TodayBean;
+import cn.edu.gdmec.android.liereader.bean.VideoUrlBean;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
+import retrofit2.http.Url;
 import rx.Observable;
 
 /**
@@ -18,5 +22,11 @@ public interface RetrofitService {
 
     @GET("/v2/movie/{total}")
     Observable<MoviesBean> getMovie(@Path("total") String total);
+
+    @GET("news/feed/v51")
+    Observable<TodayBean> getToday(@Query("category") String category);
+
+    @GET
+    Observable<VideoUrlBean> getVideoUrl(@Url String url);
 
 }
