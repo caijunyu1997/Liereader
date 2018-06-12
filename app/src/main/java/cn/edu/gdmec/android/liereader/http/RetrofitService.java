@@ -4,6 +4,7 @@ import cn.edu.gdmec.android.liereader.bean.MoviesBean;
 import cn.edu.gdmec.android.liereader.bean.NewsBean;
 import cn.edu.gdmec.android.liereader.bean.TodayBean;
 import cn.edu.gdmec.android.liereader.bean.VideoUrlBean;
+import cn.edu.gdmec.android.liereader.bean.WeatherBean;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -28,5 +29,8 @@ public interface RetrofitService {
 
     @GET
     Observable<VideoUrlBean> getVideoUrl(@Url String url);
+
+    @GET("weather_mini")
+    Observable<WeatherBean> getWeather(@Query("citykey") Integer citykey);
 
 }

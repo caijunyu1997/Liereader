@@ -6,6 +6,7 @@ import cn.edu.gdmec.android.liereader.bean.MoviesBean;
 import cn.edu.gdmec.android.liereader.bean.NewsBean;
 import cn.edu.gdmec.android.liereader.bean.TodayBean;
 import cn.edu.gdmec.android.liereader.bean.VideoUrlBean;
+import cn.edu.gdmec.android.liereader.bean.WeatherBean;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -43,6 +44,10 @@ public class RetrofitHelper {
 
     public Observable<VideoUrlBean> getVideoUrl(String api){
         return retrofitService.getVideoUrl(api);
+    }
+
+    public Observable<WeatherBean> getWeather(Integer citykey){
+        return retrofitService.getWeather(citykey);
     }
 
     public OkHttpClient getOkHttpClient() {
