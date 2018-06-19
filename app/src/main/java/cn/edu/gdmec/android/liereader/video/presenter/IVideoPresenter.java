@@ -5,5 +5,5 @@ package cn.edu.gdmec.android.liereader.video.presenter;
  */
 
 public interface IVideoPresenter {
-    void loadVideo();
+    void loadVideo(int start);
 }

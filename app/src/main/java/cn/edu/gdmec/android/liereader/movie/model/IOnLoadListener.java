@@ -9,4 +9,6 @@ import cn.edu.gdmec.android.liereader.bean.MoviesBean;
 public interface IOnLoadListener {
     void success(MoviesBean moviesBean);
     void fail(Throwable throwable);
+
+    void loadMoreSuccess(MoviesBean moviesBean);
 }

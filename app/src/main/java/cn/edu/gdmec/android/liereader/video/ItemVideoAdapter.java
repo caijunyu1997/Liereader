@@ -19,7 +19,7 @@ import cn.jzvd.JZVideoPlayerStandard;
  * Created by apple on 18/6/12.
  */
 
-public class ItemVideoAdapter extends RecyclerView.Adapter<ItemVideoAdapter.ViewHolder> {
+public class ItemVideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<TodayContentBean> objects = new ArrayList<TodayContentBean>();
     private List<String> videoList = new ArrayList<>();
@@ -34,23 +34,44 @@ public class ItemVideoAdapter extends RecyclerView.Adapter<ItemVideoAdapter.View
         this.videoList = videoList;
     }
 
-
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_video, parent, false);
-        return new ItemVideoAdapter.ViewHolder(view);
+    public void addData(List<TodayContentBean> objects,List<String> videoList) {
+        this.objects.addAll(objects);
+        this.videoList.addAll(videoList);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        TodayContentBean bean=objects.get(position);
-        holder.videoPlayer.setUp(videoList.get(position),
-                JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL,
-                bean.getAbstractX());
-        Glide.with(context)
-                .load(bean.getLarge_image_list().get(0).getUrl())
-                .into( holder.videoPlayer.thumbImageView);
+    public int getItemViewType(int position) {
+        if (position + 1 == getItemCount()) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType==0){
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_video, parent, false);
+            return new ItemVideoAdapter.ViewHolder(view);
+        }else {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.footer, parent, false);
+            return new ItemVideoAdapter.FooterHolder(view);
+        }
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof ViewHolder) {
+            TodayContentBean bean = objects.get(position);
+            ((ViewHolder) holder).videoPlayer.setUp(videoList.get(position),
+                    JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL,
+                    bean.getAbstractX());
+            Glide.with(context)
+                    .load(bean.getLarge_image_list().get(0).getUrl())
+                    .into(((ViewHolder) holder).videoPlayer.thumbImageView);
+        }
     }
 
     @Override
@@ -70,6 +91,12 @@ public class ItemVideoAdapter extends RecyclerView.Adapter<ItemVideoAdapter.View
         public ViewHolder(View view) {
             super(view);
             videoPlayer = (JZVideoPlayerStandard) view.findViewById(R.id.video_player);
+        }
+    }
+
+    protected class FooterHolder extends RecyclerView.ViewHolder{
+        public FooterHolder(View itemView){
+            super(itemView);
         }
     }
 }

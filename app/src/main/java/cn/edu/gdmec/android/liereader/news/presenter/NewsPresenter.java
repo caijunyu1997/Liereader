@@ -37,8 +37,16 @@ public class NewsPresenter implements INewsPresenter,IOnloadListener{
     }
 
     @Override
+    public void loadMoreSuccess(NewsBean newsBean) {
+        iNewsView.hideDialog();
+        iNewsView.showMoreNews(newsBean);
+    }
+
+    @Override
     public void loadNews(int type, int startPage) {
-        iNewsView.showDialog();
+        if (startPage==0) {
+            iNewsView.showDialog();
+        }
         switch (type){
             case FgNewsFragment.NEWS_TYPE_TOP:
                 iNewsModel.loadNews("headline",startPage, Api.HEADLINE_ID,

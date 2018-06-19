@@ -31,9 +31,11 @@ public class VideoPresenter implements IVideoPresenter, IVideoLoadListener {
     }
 
     @Override
-    public void loadVideo() {
-        iVideoView.showDialog();
-        iVideoModel.loadVideo("video", this);
+    public void loadVideo(int start) {
+        if (start==0){
+            iVideoView.showDialog();
+        }
+        iVideoModel.loadVideo("video",start, this);
     }
 
     @Override
@@ -52,6 +54,18 @@ public class VideoPresenter implements IVideoPresenter, IVideoLoadListener {
     public void fail(Throwable throwable) {
         iVideoView.hideDialog();
         iVideoView.showErrorMsg(throwable);
+    }
+
+    @Override
+    public void loadMoreSuccess(List<VideoUrlBean> videoUrlBeans, List<TodayContentBean> contentBeans) {
+        List<String> videoList = new ArrayList<>();
+        iVideoView.hideDialog();
+        for (int i = 0; i < videoUrlBeans.size(); i++) {
+            String mainUrl = videoUrlBeans.get(i).getData().getVideo_list().getVideo_1().getMain_url();
+            final String url1 = (new String(Base64.decode(mainUrl.getBytes(), Base64.DEFAULT)));
+            videoList.add(url1);
+        }
+        iVideoView.showMoreVideo(contentBeans, videoList);
     }
 
     public static String getVideoContentApi(String videoid) {

@@ -14,9 +14,9 @@ import rx.schedulers.Schedulers;
 public class MovieMoael implements IMovieModel{
 
     @Override
-    public void loadMovie(String total,final IOnLoadListener iOnLoadListener) {
+    public void loadMovie(String total, final int start, final IOnLoadListener iOnLoadListener) {
         RetrofitHelper retrofitHelper = new RetrofitHelper(Api.MOVIE_HOST);
-        retrofitHelper.getMovies(total)
+        retrofitHelper.getMovies(total,start)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<MoviesBean>() {
@@ -32,7 +32,11 @@ public class MovieMoael implements IMovieModel{
 
                     @Override
                     public void onNext(MoviesBean moviesBean) {
-                        iOnLoadListener.success(moviesBean);
+                        if (start!=0){
+                            iOnLoadListener.loadMoreSuccess(moviesBean);
+                        }else{
+                            iOnLoadListener.success(moviesBean);
+                        }
                     }
                 });
     }

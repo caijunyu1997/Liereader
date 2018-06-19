@@ -9,4 +9,6 @@ import cn.edu.gdmec.android.liereader.bean.NewsBean;
 public interface IOnloadListener {
     void success(NewsBean newsBean);
     void fail(String error);
+
+    void loadMoreSuccess(NewsBean newsBean);
 }

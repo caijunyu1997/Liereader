@@ -5,5 +5,5 @@ package cn.edu.gdmec.android.liereader.video.model;
  */
 
 public interface IVideoModel {
-    void loadVideo(String category, IVideoLoadListener iVideoLoadListener);
+    void loadVideo(String category,int start, IVideoLoadListener iVideoLoadListener);
 }
