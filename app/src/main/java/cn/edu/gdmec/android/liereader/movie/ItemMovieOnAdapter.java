@@ -3,6 +3,7 @@ package cn.edu.gdmec.android.liereader.movie;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,11 +40,7 @@ public class ItemMovieOnAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public void addData(List<MoviesBean.SubjectsBean> newobjects){
-        if (newobjects==null){
-            Toast.makeText(context, "没有更多了......", Toast.LENGTH_SHORT).show();
-        }else {
             objects.addAll(newobjects);
-        }
     }
 
     @Override

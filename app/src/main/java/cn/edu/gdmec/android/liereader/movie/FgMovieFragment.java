@@ -92,8 +92,13 @@ public class FgMovieFragment extends Fragment implements IMovieView {
 
     @Override
     public void showMoreMovie(MoviesBean moviesBean) {
-        movieOnAdapter.addData(moviesBean.getSubjects());
-        movieOnAdapter.notifyDataSetChanged();
+        if (moviesBean.getStart()>=40){
+            movieOnAdapter.notifyItemRemoved(movieOnAdapter.getItemCount());
+            Toast.makeText(getContext(), "没有更多了......", Toast.LENGTH_SHORT).show();
+        }else {
+            movieOnAdapter.addData(moviesBean.getSubjects());
+            movieOnAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
